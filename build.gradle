@@ -12,12 +12,17 @@ repositories.mavenCentral()
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
-	compile fileTree(dir: "${project.rootDir}/lib", include: '**/*.jar')
+	compile fileTree(dir: "${project.rootDir}/lib", include: '**/smack*.jar')
 }
 
 uploadArchives {
 	repositories.mavenDeployer {
 		repository(url: 'file:lib')
 	}
-
 }
+
+// TODO Make sure the created fat jar is smaller and contain only the smack.jar
+
+//jar {
+//	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+//}
