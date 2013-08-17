@@ -1,13 +1,9 @@
-import javax.security.auth.login.ConfigurationSpi;
-
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 version = 1.0
-group = 'com.ka.gradle.plugin.notifier'
-
-//archiveBaseName = 'im-notifier'
+group = 'com.ka.gradle.notifier'
 
 repositories.mavenCentral()
 
