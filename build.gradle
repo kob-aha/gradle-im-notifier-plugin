@@ -1,3 +1,5 @@
+import javax.security.auth.login.ConfigurationSpi;
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
@@ -9,10 +11,17 @@ group = 'com.ka.gradle.plugin.notifier'
 
 repositories.mavenCentral()
 
+configurations {
+	thirdParties
+	
+	compile.extendsFrom thirdParties
+}
+
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
-	compile fileTree(dir: "${project.rootDir}/lib", include: '**/smack*.jar')
+	
+	thirdParties fileTree(dir: "${project.rootDir}/lib", include: ['**/smack.jar', '**/smackx.jar'])
 }
 
 uploadArchives {
@@ -21,8 +30,6 @@ uploadArchives {
 	}
 }
 
-// TODO Make sure the created fat jar is smaller and contain only the smack.jar
-
-//jar {
-//	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-//}
+jar {
+	from { configurations.thirdParties.collect { it.isDirectory() ? it : zipTree(it) } }
+}
