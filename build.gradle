@@ -1,0 +1,23 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+version = 1.0
+group = 'com.ka.gradle.plugin.notifier'
+
+//archiveBaseName = 'im-notifier'
+
+repositories.mavenCentral()
+
+dependencies {
+	compile gradleApi()
+	compile localGroovy()
+	compile fileTree(dir: "${project.rootDir}/lib", include: '**/*.jar')
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url: 'file:lib')
+	}
+
+}
