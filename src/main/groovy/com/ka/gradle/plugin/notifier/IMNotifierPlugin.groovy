@@ -47,10 +47,10 @@ class IMNotifierPlugin implements Plugin<Project> {
 				if (notifiedTask && notifierTask) {
 				
 					notifierTask.notifiedTask = notifiedTask
-					notifiedTask.finalizedBy = [notifierTaskName]
+					notifiedTask.finalizedBy notifierTaskName
 				
 					project.task(taskName) {
-						dependsOn = [notifiedTask]
+						dependsOn notifiedTask
 					}
 				}
 			}
