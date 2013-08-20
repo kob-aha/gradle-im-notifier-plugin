@@ -48,6 +48,11 @@ class IMNotifierPlugin implements Plugin<Project> {
 				
 					notifierTask.notifiedTask = notifiedTask
 					notifiedTask.finalizedBy notifierTaskName
+					
+					// Add finalize dependency to all dependent tasks 
+					notifiedTask.taskDependencies.getDependencies(notifiedTask).each { dependentTask ->
+						dependentTask.finalizedBy notifierTaskName
+					}
 				
 					project.task(taskName) {
 						dependsOn notifiedTask

@@ -30,7 +30,10 @@ class NotifierTask extends DefaultTask {
 			return
 		}
 			
-		if (notifiedTask?.state?.failure) {
+		boolean dependTaskfailed = 
+			notifiedTask?.taskDependencies?.getDependencies(notifiedTask)?.any { dependentTask -> dependentTask.state.failure }
+		
+		if (dependTaskfailed || notifiedTask?.state?.failure) {
 			client.sendMessage(pluginExtension, "Running task ${notifiedTask.name} failed")
 		} else {
 			client.sendMessage(pluginExtension, "Running task ${notifiedTask.name} finished successfully")
