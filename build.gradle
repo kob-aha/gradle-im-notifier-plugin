@@ -3,9 +3,12 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 version = 1.0
-group = 'com.ka.gradle.notifier'
+group = 'com.ka.gradle.plugin.notifier'
 
-repositories.mavenCentral()
+repositories{
+	mavenLocal()
+	mavenCentral()
+}
 
 configurations {
 	thirdParties
@@ -17,7 +20,8 @@ dependencies {
 	compile gradleApi()
 	compile localGroovy()
 	
-	thirdParties fileTree(dir: "${project.rootDir}/lib", include: ['**/smack.jar', '**/smackx.jar'])
+	thirdParties 'jivesoftware:smack:3.1.0'
+	thirdParties 'jivesoftware:smackx:3.1.0'
 }
 
 uploadArchives {
@@ -27,5 +31,6 @@ uploadArchives {
 }
 
 jar {
+	baseName = 'im-notifier'
 	from { configurations.thirdParties.collect { it.isDirectory() ? it : zipTree(it) } }
 }
