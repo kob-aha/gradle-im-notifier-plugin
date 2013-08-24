@@ -1,19 +1,16 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 
 version = 1.0
 group = 'com.ka.gradle.plugin.notifier'
-archiveBaseName = 'im-notifier'
 
 repositories{
 	mavenLocal()
 	mavenCentral()
-	mavenRepo(url: 'http://mvnrepository.com/')
 }
 
 configurations {
-	mavenHttp
 	thirdParties
 	
 	compile.extendsFrom thirdParties
@@ -25,15 +22,47 @@ dependencies {
 	
 	thirdParties 'jivesoftware:smack:3.1.0'
 	thirdParties 'jivesoftware:smackx:3.1.0'
-	
-	mavenHttp 'org.apache.maven.wagon:wagon-http-lightweight:2.4'
-	
 }
 
-uploadArchives {
-	repositories.mavenDeployer {
-		configuration = configurations.mavenHttp
-		repository(url: 'http://repo1.maven.org/maven2/')
+publishing {
+	publications {
+		jar(MavenPublication) {
+			artifactId 'im-notifier'
+			
+			from components.java
+			
+			pom.withXml {
+				asNode().children().last() + {
+					resolveStrategy = Closure.DELEGATE_FIRST
+					name 'im-notifier-plugin'
+					description 'Gradle IM Notifier Plugin'
+					url 'https://github.com/kob-aha/gradle-im-notifier-plugin'
+					scm {
+						url 'https://github.com/kob-aha/gradle-im-notifier-plugin.git'
+						connection 'https://github.com/kob-aha/gradle-im-notifier-plugin.git'
+					}
+					licenses {
+						license {
+							name 'The Apache Software License, Version 2.0'
+							url 'http://www.apache.org/license/LICENSE-2.0.txt'
+							distribution 'repo'
+						}
+					}
+					developers {
+						developer {
+							name 'Koby Aharon'
+							email 'kobyahron@gmail.com'
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	repositories {
+		maven {
+			url "file:/${project.projectDir}/lib"
+		}
 	}
 }
 
