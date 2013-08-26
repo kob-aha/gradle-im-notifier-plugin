@@ -65,8 +65,3 @@ publishing {
 		}
 	}
 }
-
-jar {
-	baseName = 'im-notifier'
-	from { configurations.thirdParties.collect { it.isDirectory() ? it : zipTree(it) } }
-}
