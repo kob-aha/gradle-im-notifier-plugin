@@ -14,7 +14,7 @@ class NotifierTask extends DefaultTask {
 	public NotifierTask() {
 		super()
 		
-		client = new GTalkClient()
+		client = new SkypeClient()
 	}
 	
 	
