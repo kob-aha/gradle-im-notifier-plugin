@@ -5,7 +5,7 @@ import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.XMPPConnection
 import org.jivesoftware.smack.ConnectionConfiguration
 
-class GTalkClient {
+class GTalkClient implements IMClient {
 
 	def connConfig
 	def connection
@@ -15,6 +15,7 @@ class GTalkClient {
 		connection = new XMPPConnection(connConfig)
 	}
 
+	@Override
 	public void sendMessage(IMNotifierPluginExtension pluginExtension, String message) {
 		Message msg = new Message(pluginExtension.recipient, Message.Type.chat);
 		msg.setBody(message);			

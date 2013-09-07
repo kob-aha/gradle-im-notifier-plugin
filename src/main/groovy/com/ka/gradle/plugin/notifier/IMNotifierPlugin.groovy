@@ -11,7 +11,7 @@ class IMNotifierPlugin implements Plugin<Project> {
 
 		project.extensions.create('imNotifier', IMNotifierPluginExtension)
 		
-		// Create a default notifier task that wil be used by notify rule
+		// Create a default notifier task that will be used by notify rule
 		Map<String, ?> taskProps = [type: NotifierTask, descritpion: 'Sends a notification message using GTalk']
 		project.task(taskProps, notifierTaskName)
 				

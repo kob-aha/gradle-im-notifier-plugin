@@ -9,7 +9,7 @@ class NotifierTask extends DefaultTask {
 	@Optional
 	Task notifiedTask = null
 	
-	GTalkClient client
+	IMClient client
 	
 	public NotifierTask() {
 		super()
